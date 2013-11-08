@@ -17,7 +17,8 @@ near the end of the document body. dfp_header is marked for deprecation.""")
 <script type="text/javascript" src="http%s://www.googletagservices.com/tag/js/gpt.js"></script>
 <script type="text/javascript">
 googletag.cmd.push(function() {
-    googletag.pubads().enableSingleRequest(); 
+    googletag.pubads().enableSingleRequest();
+    googletag.pubads().collapseEmptyDivs();
     googletag.enableServices();
 });
 </script>
@@ -64,6 +65,7 @@ def dfp_footer(context):
     // disableSingleRequest method and then we can consider using it again.
     //googletag.pubads().enableSingleRequest();
 
+    googletag.pubads().collapseEmptyDivs();
     googletag.enableServices();
 
     var arr = document.getElementsByTagName('div');
