@@ -65,19 +65,6 @@ def dfp_footer(context):
     // disableSingleRequest method and then we can consider using it again.
     //googletag.pubads().enableSingleRequest();
 
-    googletag.pubads().collapseEmptyDivs();
-    googletag.enableServices();
-
-    var arr = document.getElementsByTagName('div');
-    for (var i=0; i<arr.length; i++)
-    {
-        if (arr[i].className == 'gpt-ad')
-        {
-            var id = arr[i].getAttribute('id');
-            googletag.cmd.push(function() { googletag.display(id); });
-        }
-    }
-
     if (googletag.on !== undefined && $ !== undefined) {
         googletag.on("gpt-slot_rendered", function(e, level, message, service, slot, reference) {
             var slotId = slot.getSlotId();
@@ -91,6 +78,19 @@ def dfp_footer(context):
                 $slot.closest('.advertisement').show();
             }
         });
+    }
+
+    googletag.pubads().collapseEmptyDivs();
+    googletag.enableServices();
+
+    var arr = document.getElementsByTagName('div');
+    for (var i=0; i<arr.length; i++)
+    {
+        if (arr[i].className == 'gpt-ad')
+        {
+            var id = arr[i].getAttribute('id');
+            googletag.cmd.push(function() { googletag.display(id); });
+        }
     }
 
     });
