@@ -78,6 +78,21 @@ def dfp_footer(context):
         }
     }
 
+    if (googletag.on !== undefined && $ !== undefined) {
+        googletag.on("gpt-slot_rendered", function(e, level, message, service, slot, reference) {
+            var slotId = slot.getSlotId();
+            var $slot = $("#" + slotId.getDomId());
+
+            if($slot.find("iframe:not([id*=hidden])")
+                .map(function() {
+                    return this.contentWindow.document;
+                })
+                .find("body").children().length > 0) {
+                $slot.closest('.advertisement').show();
+            }
+        });
+    }
+
     });
 </script>"""
 
