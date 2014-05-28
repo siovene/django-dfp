@@ -1,6 +1,6 @@
-Django Simple Autocomplete
-==========================
-**App that provides tags to fetch Google DFP ads in a single request.**
+Django DFP
+==========
+**App that provides tags to fetch Google DFP ads.**
 
 .. contents:: Contents
     :depth: 5
@@ -24,13 +24,16 @@ Installation
 Usage
 -----
 
-Load `dfp_tags` in your template with `{% load dfp_tags %}`. Call `{ %dfp_footer %}` 
+Load `dfp_tags` in your template with `{% load dfp_tags %}`. Call `{ %dfp_footer %}`
 once near the end of your document body. You would typically call it just
 before the closing body tag.
 
 An example tag is
 
-    {% dfp_tag "/1234/travel" 300 250 "interests" "sports" "music" %}
+    {% dfp_tag "/1234/travel" 300 250 interests="sports,music" position="top" color=variable foo=bar %}
 
-You may call as many tags as you want. See http://support.google.com/dfp_sb/bin/answer.py?hl=en&answer=1651549 for more examples.    
+String values are comma delimited. Note the lack of spaces around the comma.
+Both keys and values can be variables.
+
+You may call as many tags as you want. See http://support.google.com/dfp_sb/bin/answier.py?hl=en&answer=1651549 for more examples.
 
