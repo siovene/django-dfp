@@ -1,6 +1,22 @@
 Changelog
 =========
 
+0.4.1
+-----
+#. Fix error in manifest.
+
+0.4
+---
+#. Move javascript to a template so it can be customized.
+
+0.3.3
+-----
+#. Change Django to django in setup.py.
+
+0.3.2
+-----
+#. Republish slotRenderEnded event as DFPSlotRenderEnded.
+
 0.3.1
 -----
 #. Allow targeting keys to be variables.
