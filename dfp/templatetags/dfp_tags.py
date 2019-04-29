@@ -26,42 +26,34 @@ def dfp_footer(context):
 
 <script type="text/javascript">
     googletag.cmd.push(function() {
-
-    var stack = new Array();
-    var reserved = ['slot_name', 'id', 'width', 'height', 'style', 'class'];
-    var arr = document.getElementsByTagName('div');
-    for (var i=0; i<arr.length; i++)
-    {
-        if (arr[i].className == 'gpt-ad')
-        {
-            var slot_name = arr[i].getAttribute('slot_name');
-            var id = arr[i].getAttribute('id');
-            var width = parseInt(arr[i].getAttribute('width'));
-            var height = parseInt(arr[i].getAttribute('height'));
-            var slot = googletag.defineSlot(slot_name, [width, height], id).addService(googletag.pubads());
-
-            for (var j=0; j<arr[i].attributes.length; j++){
-                var attr = arr[i].attributes[j];
-                if (attr.name.indexOf('data-pair-') == 0){
-                    var key = attr.name.slice(10);
-                    var value = attr.value.split('|');
-                    slot.setTargeting(key, value);
+        var stack = new Array();
+        var reserved = ['slot_name', 'id', 'width', 'height', 'style', 'class'];
+        var arr = document.getElementsByTagName('div');
+        
+        for (var i=0; i<arr.length; i++) {
+            if (arr[i].className == 'gpt-ad') {
+                var slot_name = arr[i].getAttribute('slot_name');
+                var id = arr[i].getAttribute('id');
+                var width = parseInt(arr[i].getAttribute('width'));
+                var height = parseInt(arr[i].getAttribute('height'));
+                var slot = googletag.defineSlot(slot_name, [width, height], id).addService(googletag.pubads());
+    
+                for (var j=0; j<arr[i].attributes.length; j++) {
+                    var attr = arr[i].attributes[j];
+                    if (attr.name.indexOf('data-pair-') == 0){
+                        var key = attr.name.slice(10);
+                        var value = attr.value.split('|');
+                        slot.setTargeting(key, value);
+                    }
                 }
+                stack.push(slot);
             }
-            stack.push(slot);
         }
-    }
-
-    // We can't use enableSingleRequest since that kills the ability to do
-    // subsequent ajax loads that contain DFP tags. Someday DFP may provide a
-    // disableSingleRequest method and then we can consider using it again.
-    //googletag.pubads().enableSingleRequest();
-
-    if (googletag.on !== undefined && $ !== undefined) {
-        googletag.on("gpt-slot_rendered", function(e, level, message, service, slot, reference) {
-            var slotId = slot.getSlotId();
+    
+        googletag.pubads().addEventListener ("slotRenderEnded", function(e) {
+            var slotId = e.slot.getSlotId();
             var $slot = $("#" + slotId.getDomId());
-
+    
             if($slot.find("iframe:not([id*=hidden])")
                 .map(function() {
                     return this.contentWindow.document;
@@ -70,28 +62,17 @@ def dfp_footer(context):
                 $slot.closest('.advertisement').show();
             }
         });
-    }
-
-    googletag.pubads().collapseEmptyDivs();
-    googletag.enableServices();
-
-    var arr = document.getElementsByTagName('div');
-    for (var i=0; i<arr.length; i++)
-    {
-        if (arr[i].className == 'gpt-ad')
-        {
-            var id = arr[i].getAttribute('id');
-            googletag.cmd.push(function() { googletag.display(id); });
+    
+        googletag.pubads().collapseEmptyDivs();
+        googletag.enableServices();
+    
+        var arr = document.getElementsByTagName('div');
+        for (var i=0; i<arr.length; i++) {
+            if (arr[i].className == 'gpt-ad') {
+                var id = arr[i].getAttribute('id');
+                googletag.cmd.push(function() { googletag.display(id); });
+            }
         }
-    }
-
-    /* Not ready yet - ajacx reloads
-    (function where_am_i_worker(){
-        googletag.pubads().refresh(stack);
-        setTimeout(where_am_i_worker, 10000);
-    })();
-    */
-
     });
 </script>"""
 
