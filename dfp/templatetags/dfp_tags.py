@@ -2,7 +2,7 @@ from random import randint
 from types import ListType, StringType
 
 from django import template
-from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 
 
 register = template.Library()
@@ -77,7 +77,7 @@ def dfp_footer(context):
     });
 </script>"""
 
-    return format_html(result)
+    return mark_safe(result)
 
 
 @register.tag
