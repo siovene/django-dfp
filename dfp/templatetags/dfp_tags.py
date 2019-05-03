@@ -2,6 +2,7 @@ from random import randint
 from types import ListType, StringType
 
 from django import template
+from django.utils.html import format_html
 
 
 register = template.Library()
@@ -50,7 +51,7 @@ def dfp_footer(context):
             }
         }
     
-        googletag.pubads().addEventListener ("slotRenderEnded", function(e) {
+        googletag.pubads().addEventListener("slotRenderEnded", function(e) {
             var slotId = e.slot.getSlotId();
             var $slot = $("#" + slotId.getDomId());
     
@@ -76,7 +77,7 @@ def dfp_footer(context):
     });
 </script>"""
 
-    return result
+    return format_html(result)
 
 
 @register.tag
